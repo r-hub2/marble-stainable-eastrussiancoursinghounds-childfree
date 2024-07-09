@@ -1,0 +1,170 @@
+---
+title: "Introduction to Childfree"
+author: "Zachary Neal & Jennifer Watling Neal, Michigan State University"
+output: 
+  rmarkdown::html_vignette:
+  toc: true
+  
+bibliography: childfree.bib
+link-citations: yes
+vignette: >
+  %\VignetteIndexEntry{childfree}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::opts_knit$set(global.par = TRUE)
+```
+
+# Table of Contents {#toc}
+
+[<img src='../man/figures/logo.png' align="right" height="250" />](https://www.zacharyneal.com/childfree)
+
+1. [Introduction](#introduction)
+    a. [Welcome](#welcome)
+    b. [Loading the package](#loading)
+    c. [Package overview](#overview)
+    d. [Terminology](#terminology)
+    e. [Warnings](#warnings)
+2. [Datasets](#data)
+    a. [Demographic and Health Surveys (DHS)](#dhs)
+    b. [National Survey of Family Growth](#nsfg)
+    c. [State of the State Survey](#soss)
+
+# Introduction {#introduction}
+
+## Welcome {#welcome}
+Thank you for your interest in the childfree package! This vignette illustrates how to use this package to access and harmonize demographic data to study childfree individuals. *Childfree individuals* are people who neither have nor want children [@neal2023framework]. The fact that they do not want children makes them different from other types of non-parents, including *not-yet-parents* who want children in the future, *childless* individuals who cannot have children, *undecided* people who do not know if they want children in the future.
+
+The `childfree` package can be cited as:
+
+**Neal, Z. P. and Neal, J. W. (2024). childfree: An R package to access and harmonize childfree demographic data. *Comprehensive R Archive Network*. [https://cran.r-project.org/package=childfree](https://cran.r-project.org/package=childfree)**
+
+For additional resources on the childfree package, please see [https://www.zacharyneal.com/childfree](https://www.zacharyneal.com/childfree).
+
+If you have questions about the childfree package or would like a childfree package hex sticker, please contact the maintainer Zachary Neal by email ([zpneal\@msu.edu](mailto:zpneal@msu.edu)). Please report bugs in the backbone package at [https://github.com/zpneal/childfree/issues](https://github.com/zpneal/childfree/issues).
+
+## Loading the package {#loading}
+The childfree package can be loaded in the usual way:
+```{r setup}
+library(childfree)
+```
+Upon successful loading, a startup message will display that shows the version number, citation, ways to get help, and ways to contact us.
+
+## Package overview {#overview}
+The primary use of the childfree package is to obtain demographic data about childfree individuals from publicly available sources. Each section of this vignette describes the data sources that are available, which include:
+
+* Demographic and Health Surveys (DHS)
+* US CDC National Survey of Family Growth (NSFG)
+* Michigan State University State of the State Survey (SOSS)
+
+*Future releases will offer access to additional data sources, and will harmonize data extracted from different sources.*
+
+## Terminology {#terminology}
+The childfree package uses the theoretical framework and terminology defined by @neal2023framework.
+
+**Childfree**: A person who does not have children and does not want children, regardless of whether they can have children, is called "*childfree*". In contrast, a person who does not have children but cannot have children for biological or non-biological reasons is called "*childless*".
+
+**Family Status**: The terms "childfree" and "childless" are examples of "*family statuses*". The "*ABC*" framework describes how a person's family status is defined by the intersection of:
+
+* An **A**ttitude: Do you want (more) children?
+* A **B**ehavior: Have you ever had children?
+* A **C**ircumstance: Are there barriers to you having children?
+
+A "*parent*" has had children (behavior = yes). Parents may be "*fulfilled*" if they have had exactly the number of children they want, "*unfulfilled*" if they have had fewer children than they want, "*reluctant*" if they have had more children than they want, or "*ambivalent*" if they do not know how many children they want(ed).
+
+A non-parent had not had children (behavior = no). However, attitudes and circumstances distinguish different types of non-parents. A "*childfree*" person does not want children (attitude = no), while a "*childless*" person wants children (attitude = yes) but experienced barriers (circumstance = yes), and a "*not-yet-parent*" wants children (attitude = yes) and has not experienced barriers (circumstance = no). Non-parent family statuses are "momentary," which means they describe a person's status *at the moment*. However, a person may transition between non-parent statuses, or from a non-parent status to a parent status, over time.
+
+**Questions**: The childfree package is primarily focused on data concerning childfree individuals. Childfree individuals can be identified in survey data using a "*WIDE*" range of questions:
+
+* **W**ant: Do you *want* children?
+* **I**deal: What is your *ideal* number of children?
+* **E**xpect: Do you *expect* to have children?
+* **D**irect: Are you childfree?
+
+Each type of question has advantages and disadvantages, and can yield different results when determining which survey respondents are childfree. The dataframes generated by the childfree package contain one binary variable for each of the "WIDE" questions available in a given dataset (e.g., `cf_want`, `cf_ideal`), plus one categorical variable (i.e., `famstat`) that classifies all respondents into family statuses using all available variables.
+
+## Warnings {#warnings}
+The childfree package provides access to data about childfree individuals, and aims to facilitate research on this population. However, care should be taken when analyzing data obtained using the package's functions:
+
+**Operationalization**: Although the functions in the childfree package aim to recode each dataset's variables in a consistent and comparable way, there are subtle differences in how variables were originally operationalized that makes perfect harmonization and comparability impossible. Exercise caution comparing the same recoded variable across datasets.
+
+**Universes**: Each dataset accessible through the childfree package was collected from a population-representative sample. However, there is variation in the universes from which these samples were drawn, and therefore variation in the populations of which they are representative. For example, while respondents for the SOSS were sampled from all adults in Michigan, the respondents for the NSFG were sampled from US women ages 15-44.
+
+**Weights**: Generating population estimates from these data generally requires the use of sampling weights, which are included in the dataframes generated by the childfree package. However, use of sampling weights can be complex, particularly when combining samples from multiple waves, locations, or surveys. Exercise caution using the included sampling weights.
+
+[back to Table of Contents](#toc)
+
+# Datasets {#data}
+The following functions provide access to data on childfree individuals:
+
+* `dhs()` - Demographic and Health Surveys
+* `nsfg()` - National Survey of Family Growth
+* `soss()` - State of the State Survey
+
+The following sections provide more information about these data sources, and illustrate how these functions work. The [detailed codebooks](codebooks.html) for the dataframes generated by these functions are provided in a separate vignette.
+
+## Demographic and Health Surveys (DHS) {#dhs}
+The [**Demographic and Health Surveys**](https://dhsprogram.com/) (DHS) program has regularly collected health data from population-representative samples in many countries using standardized surveys since 1984. The "individual recode" data files contain women's responses, while the "men recode" files contain men's responses. These files are available in SPSS, SAS, and Stata formats from [https://www.dhsprogram.com/](https://www.dhsprogram.com/), however access requires a [free application](https://dhsprogram.com/data/Access-Instructions.cfm). Once one or more of these files has been downloaded, the `dhs()` function imports the data, extracts and recoded selected variables, and returns a ready-to-use dataframe.
+
+Although access to DHS data requires an application, the DHS program provides [model datasets]{https://dhsprogram.com/data/Download-Model-Datasets.cfm} containing fictitious data that do not require prior application to access. The "ZZIR62FL.SAV" file is a model individual recode dataset in SPSS format, and provides an example of how the `dhs()` function works. Running
+
+```{r, results='hide'}
+dat <- dhs(file = "ZZIR62FL.SAV", extra.vars = c("v201", "v602", "v613"))
+```
+
+imports the data, extracts and recodes variables, and returns an R dataframe called `dat`. Inspecting selected variables for a selected observation in `dat`
+
+```{r}
+t(dat[2368,c(3:9,19:21)])
+```
+
+we see that it contains the record of an unemployed 18 year old female, who has completed 12 years of education, and is currently single, living in an urban area. She is classified as childfree because she does not have or want children. 
+
+Specifying `extra.vars = c("v201", "v602", "v613")` requests that the function also include these three variables, which are not extracted and recoded by default. The three variables requested in this example are the raw source variables from which `dhs()` determines each respondent's family status: `v201` contains the respondent's number of children, `v602` contains a code indicating whether the respondent wants children (3 = no), and `v613` contains the respondent's ideal number of children. In practice, using the `extra.vars` option can be useful to retain other information collected by DHS, but that is not automatically included.
+
+[back to Table of Contents](#toc)
+
+## National Survey of Family Growth (NSFG) {#nsfg}
+The [**National Survey of Family Growth**](https://www.cdc.gov/nchs/nsfg/index.htm) (NSFG) is conducted by the U.S. Centers for Disease Control, andregularly collects fertility and other health information from a population-representative sample of adults in the United States. Between 1973 and 2002, the NSFG was conducted periodically. Starting in 2002, the NSFG transitioned to continuous data collection, releasing data in three-year waves (e.g., the 2013-2015, 2015-2017). The `nsfg()` function reads raw data directly from the CDC website, extracts and recoded selected variables, and returns a ready-to-use dataframe.
+
+For, example, we can obtain data from the NSFG collected between 2017 and 2019 using:
+
+```{r}
+dat <- nsfg(years = 2017)
+```
+
+which returns the data in a dataframe called `dat`. Inspecting selected variables for a selected observation in `dat`
+
+```{r}
+t(dat[14,2:12])
+```
+
+we see that it contains the record of a 26 year old non-hispanic white female. She is an employed college graduate living without a partner in the city, and does not identify as religious. She is classified as childfree because she does not have or want children.
+
+[back to Table of Contents](#toc)
+
+## State of the State Survey (SOSS) {#soss}
+The [**State of the State Survey**](http://ippsr.msu.edu/survey-research/state-state-survey-soss) (SOSS) is regularly collected by the Institute for Public Policy and Social Research (IPPSR) at Michigan State University (MSU). Each wave is collected from a sample of 1000 adults in the US state of Michigan, and includes sampling weights to obtain a sample that is representative of the state's population with respect to age, gender, race, and education. All waves contain the same basic demographic information, but each wave also includes questions about topics commissioned by MSU faculty and others. The `soss()` function provides access to the waves that contain questions that allow childfree adults to be identified. It reads raw data directly from the IPPSR website, extracts and recoded selected variables, and returns a ready-to-use dataframe.
+
+For, example, we can obtain data from the 84th SOSS wave, which was collected in April 2022 using:
+
+```{r}
+dat <- soss(waves = 84, extra.vars = (c("neal1", "neal2", "neal3")))
+```
+
+which returns the data in a dataframe called `dat`. Inspecting selected variables for a selected observation in `dat`
+
+```{r}
+t(dat[2,c(2:9,12:13,21:24)])
+```
+
+we see that it contains the record of a 60 year old non-hispanic white female. She is a college graduate living with her partner in the suburbs, and identifies as slightly liberal, but not as religious. She is classified as childfree because she does not have or want children.
+
+Specifying `extra.vars = c("neal1", "neal2", "neal3")` requests that the function also include these three variables, which are not extracted and recoded by default. The three variables requested in this example are the raw source variables from which `soss()` determines each respondent's family status: `neal1` contains a code indicating whether the respondent has children (2 = no), `neal2` contains a code indicating whether the respondent is planning to have children (2 = no), and `neal3` contains a code indicating whether the respondent want(ed) to have children (2 = no). In practice, using the `extra.vars` option can be useful to retain other information collected by IPPSR, but that is not automatically included.
+
+[back to Table of Contents](#toc)
+
+# References
