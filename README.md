@@ -5,7 +5,6 @@
 [![](https://www.r-pkg.org/badges/version/childfree?color=orange)](https://cran.r-project.org/package=childfree)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/childfree?color=blue)](https://cran.r-project.org/package=childfree)
 [![](http://cranlogs.r-pkg.org/badges/last-month/childfree?color=green)](https://cran.r-project.org/package=childfree)
-[![status](https://tinyverse.netlify.com/badge/childfree)](https://CRAN.R-project.org/package=childfree)
 <!-- badges: end -->
 
 ## Welcome
@@ -13,7 +12,7 @@ Welcome to the `childfree` package\! The childfree package accesses demographic 
 
 The `childfree` package can be cited as:
 
-**Neal, Z. P. and Neal, J. W. (2024). childfree: An R package to access and harmonize childfree demographic data. *Comprehensive R Archive Network*. https://CRAN.R-project.org/package=childfree.**
+**Neal, Z. P. and Neal, J. W. (2024). childfree: An R package to access and harmonize childfree demographic data. *Comprehensive R Archive Network*. https://doi.org/10.32614/CRAN.package.childfree**
 
 ## Installation
 The /release branch contains the current CRAN release of the childfree package. You can install it from [CRAN](https://CRAN.R-project.org) with:

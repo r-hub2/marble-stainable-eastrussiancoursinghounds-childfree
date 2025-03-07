@@ -14,7 +14,8 @@ soss(waves, extra.vars = NULL, progress = TRUE)
 \item{progress}{boolean: display a progress bar}
 }
 \value{
-A data frame containing variables described in the codebook available using \code{vignette("codebooks")}
+A data frame containing variables described in the codebook available using \code{vignette("codebooks")}.
+If you are offline, or if the requested data are otherwise unavailable, NULL is returned.
 }
 \description{
 Read and recode Michigan State of the State (SOSS) data
@@ -25,9 +26,9 @@ regularly collected by the Institute for Public Policy and Social Research (IPPS
 University (MSU). Each wave is collected from a sample of 1000 adults in the US state of Michigan, and
 includes sampling weights to obtain a sample that is representative of the state's population with respect
 to age, gender, race, and education. The \code{soss()} function reads the raw data from IPPSR's website, extracts
-and recodes selected variables useful for studying childfree adults and other family statuses, then returns a
-single data frame. Questions necessary for identifying childfree adults were asked in five waves, which each
-include unique questions that may be of interest:
+and recodes selected variables useful for studying childfree adults and other family statuses, then returns
+an unweighted data frame. Questions necessary for identifying childfree adults have been asked in five waves,
+which each include unique questions that may be of interest:
 \itemize{
 \item \href{http://ippsr.msu.edu/survey-research/state-state-survey-soss/soss-data/soss-79b-spring-2020}{Wave 79} (May 2020) - Neighborhoods, Health care, COVID, Personality
 \item \href{http://ippsr.msu.edu/survey-research/state-state-survey-soss/soss-data/soss-82-fall-2021}{Wave 82} (September 2021) - Trust in government, Critical Race Theory
@@ -36,19 +37,36 @@ include unique questions that may be of interest:
 \item \href{http://ippsr.msu.edu/survey-research/state-state-survey-soss/soss-data/soss-86-winter-2022}{Wave 86} (December 2022) - Education, Infrastructure
 }
 
-\strong{Weights}
+\strong{Sampling weights}
 
-The \href{https://cran.r-project.org/web/packages/survey/index.html}{\code{survey}} package can be used to incorporate sampling weights
-and obtain population-representative estimates by wave. After using \code{soss()} to obtain data for a given wave (see example below), use
-\code{dat <- svydesign(data = dat, ids = ~1, weights = ~weight)} to incorporate information about the survey design.
+The SOSS includes sampling weights that can be incorporated into analyses using the \code{survey} package to obtain
+population-representative estimates. A \link[survey]{svydesign} object for a single wave can be created
+using \code{survey::svydesign(data = data, ids = ~1, weights = ~weight)}.
 
-\strong{Known issues}
+\strong{Non-biological children}
+
+Non-biological children (e.g., adopted children, foster children, etc.) are treated the same as biological children when
+determining a respondent's family status. This matches the approach described by the ABC Framework (Neal & Neal, 2024).
+However, it can lead to discrepancies when comparing SOSS estimates to estimates derived from other data where information
+about non-biological children is not available.
+
+\strong{Additional notes}
 \itemize{
 \item Wave 79 did not include a "do not know" option for selected questions. Therefore, it is not possible to identify
 "undecided" or "ambivalent non-parent" respondents. This may lead other family status categories to be inflated.
-\item Wave 82 originally included a 500 person oversample of parents. These respondents are omitted if \code{wave == 82}.
+\item Wave 82 originally included a 500 person oversample of parents, but they are excluded from \code{nsfg(wave==82)}.
+\item The provided sampling weights are designed to be used in the analyses of individual waves. Combining data from multiple
+waves may require using adjusted weights.
 }
 }
 \examples{
-data <- soss(waves = 84, extra.vars = c("neal1"))
+\donttest{
+dat <- soss(waves = 86)  #Request data for December 2022
+if (!is.null(dat)) {  #If data was available...
+table(dat$famstat) / nrow(dat)  #Fraction of respondents with each family status
+}
+}
+}
+\references{
+ABC Framework: {Neal, Z. P. and Neal, J. W. (2024). A framework for studying adults who neither have nor want children. \emph{The Family Journal, 32}, 121-130. \doi{10.1177/10664807231198869}}
 }

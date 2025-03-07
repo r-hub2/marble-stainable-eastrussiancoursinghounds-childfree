@@ -115,10 +115,12 @@ Although access to DHS data requires an application, the DHS program provides [m
 dat <- dhs(file = "ZZIR62FL.SAV", extra.vars = c("v201", "v602", "v613"))
 ```
 
-imports the data, extracts and recodes variables, and returns an R dataframe called `dat`. Inspecting selected variables for a selected observation in `dat`
+imports the data, extracts and recodes variables, and returns an R dataframe called `dat`. If you are offline or these data are otherwise unavailable, then `dat <- NULL`.
+
+Inspecting selected variables for a selected observation in `dat`
 
 ```{r}
-t(dat[2368,c(3:9,19:21)])
+if (!is.null(dat)) {t(dat[2368,c(3:9,19:21)])}
 ```
 
 we see that it contains the record of an unemployed 18 year old female, who has completed 12 years of education, and is currently single, living in an urban area. She is classified as childfree because she does not have or want children. 
@@ -136,10 +138,10 @@ For, example, we can obtain data from the NSFG collected between 2017 and 2019 u
 dat <- nsfg(years = 2017)
 ```
 
-which returns the data in a dataframe called `dat`. Inspecting selected variables for a selected observation in `dat`
+which returns the data in a dataframe called `dat`. If you are offline or these data are otherwise unavailable, then `dat <- NULL`. Inspecting selected variables for a selected observation in `dat`
 
 ```{r}
-t(dat[14,2:12])
+if (!is.null(dat)) {t(dat[14,2:12])}
 ```
 
 we see that it contains the record of a 26 year old non-hispanic white female. She is an employed college graduate living without a partner in the city, and does not identify as religious. She is classified as childfree because she does not have or want children.
@@ -155,10 +157,10 @@ For, example, we can obtain data from the 84th SOSS wave, which was collected in
 dat <- soss(waves = 84, extra.vars = (c("neal1", "neal2", "neal3")))
 ```
 
-which returns the data in a dataframe called `dat`. Inspecting selected variables for a selected observation in `dat`
+which returns the data in a dataframe called `dat`. If you are offline or these data are otherwise unavailable, then `dat <- NULL`. Inspecting selected variables for a selected observation in `dat`
 
 ```{r}
-t(dat[2,c(2:9,12:13,21:24)])
+if (!is.null(dat)) {t(dat[2,c(2:9,12:13,21:24)])}
 ```
 
 we see that it contains the record of a 60 year old non-hispanic white female. She is a college graduate living with her partner in the suburbs, and identifies as slightly liberal, but not as religious. She is classified as childfree because she does not have or want children.

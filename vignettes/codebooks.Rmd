@@ -59,6 +59,8 @@ This table summarizes the variables that are contained in dataframes generated f
 | `id` | `(m)caseid` | string |
 | `country` | `(m)v000` | string |
 | `weight` | `(m)v005` | numeric |
+| `cluster` | `(m)v021` | numeric |
+| `strata` | `(m)v023` | numeric |
 | `file` | user | string |
 | `survey` | "DHS" | string |
 | `wave` | `(m)v000` | numeric |
@@ -72,23 +74,23 @@ This table summarizes the variables that are contained in dataframes generated f
 
 | Variable | Source | Format | Coding ______________________________ |
 | :--- | :--- | :--- | --- |
-| `cf_want` | `hasbabes` (F) <br> `everadpt` (F) <br> `seekadpt` (F) <br> `anykids` (M) <br> `rwant` | Binary | 0 = Not childfree <br> 1 = Childfree |
-| `famstat` | `hasbabes` (F) <br> `everadpt` (F) <br> `seekadpt` (F) <br> `anykids` (M) <br> `rwant` <br> `rstrstat` <br> `pstrstat` <br> `intend` <br> `jintend` | Categorical | 1 = Parent-Unclassified <br> 3 = Parent-Unfulfilled <br> 5 = Parent-Ambivalent <br> 6 = Not yet parent <br> 8 = Childless - Social <br> 9 = Childless - Biological <br> 10 = Ambivalent non-parent <br> 11 = Undecided <br> 12 = Childfree |
+| `cf_want` | `parity` (F) <br> `otherkid` (F) <br> `seekadpt` (F) <br> `anykids` (M) <br> `otachil` (M) <br> `rwant` | Binary | 0 = Not childfree <br> 1 = Childfree |
+| `famstat` | `parity` (F) <br> `otherkid` (F) <br> `seekadpt` (F) <br> `anykids` (M) <br> `otachil` (M) <br> `rwant` <br> `rstrstat` <br> `pstrstat` <br> `intent` | Categorical | 1 = Parent-Unclassified <br> 3 = Parent-Unfulfilled <br> 5 = Parent-Ambivalent <br> 6 = Not yet parent <br> 8 = Childless - Social <br> 9 = Childless - Biological <br> 10 = Ambivalent non-parent <br> 11 = Undecided <br> 12 = Childfree |
 | `sex` | --- | Categorical | 1 = Female <br> 2 = Male |
 | `lgbt` | `orient` | Binary | 1 = Straight <br> 2 = Gay/Lesbian <br> 3 = Bisexual <br> 4 = Something else |
-| `hispanic` | `rscrhisp` | Binary | 0 = Not hispanic <br> 1 = Hispanic |
+| `hispanic` | `hispanic` | Binary | 0 = Not hispanic <br> 1 = Hispanic |
 | `race` | `rscrrace` | Categorical | 1 = White <br> 2 = Black <br> 3 = Hawaiian <br> 4 = Asian <br> 5 = American Indian <br> 6 = Other |
-| `age` | `age_r` | Numeric | In years |
-| `education` | `higrade` <br> `dipged` <br> `degrees` | Ordinal | 2 = Did not graduate high school <br> 3 = High School graduate <br> 4 = Some college <br> 5 = College graduate <br> 7 = Graduate degree |
-| `partnered` | `marstat` | Categorical | 1 = Single, never partnered <br> 2 = Currently partnered <br> 3 = Formerly partnered |
+| `age` | `ager` | Numeric | In years |
+| `education` | `hieduc` | Ordinal | 2 = Did not graduate high school <br> 3 = High School graduate <br> 4 = Some college <br> 5 = College graduate <br> 7 = Graduate degree |
+| `partnered` | `rmarital` | Categorical | 1 = Single, never partnered <br> 2 = Currently partnered <br> 3 = Formerly partnered |
 | `residence` | `metro` | Ordinal | 1 = Rural <br> 3 = Suburb <br> 4 = Urban |
 | `employed` | `rwrkst` | Binary | 0 = Not employed <br> 1 = Employed |
 | `inschool` | `goschol` | Binary | 0 = Not in school <br> 1 = In school |
-| `religion` | `relcurr` | Categorical | 1 = None <br> 2 = Catholic / Orthodox <br> 5 = Protestant / Christian <br> 6 = Other |
+| `religion` | `religion` | Categorical | 1 = None <br> 2 = Catholic / Orthodox <br> 5 = Protestant / Christian <br> 6 = Other |
 | `bother` | `chbother` | Ordinal | 1 = Not at all <br> 2 = A little <br> 3 = Some <br> 4 = A great deal |
 | `id` | `caseid` | string |
 | `country` | "United States" | string |
-| `weight` | `wgt2017_2019` <br> `wgt2015_2019` <br> `wtg2013_2015` <br> `wtg2011_2013` <br> `WGTQ1Q16` <br> `finalwgt` | numeric |
+| `weight` | `wgt2022_2023` <br> `wgt2017_2019` <br> `wgt2015_2019` <br> `wtg2013_2015` <br> `wtg2011_2013` <br> `WGTQ1Q16` <br> `finalwgt` | numeric |
 | `cluster` | `secu` | numeric |
 | `stratum` | `sest` | numeric |
 | `file` | user | string |
